@@ -1,5 +1,5 @@
 import './style.css'
-import { Component, CustomElement, html } from  './Component';
+import { Component, CustomElement, Element, Attribute, html } from  './Component';
 
 //const app = document.querySelector<HTMLDivElement>('#app')!
 //app.innerHTML = `
@@ -7,8 +7,62 @@ import { Component, CustomElement, html } from  './Component';
 //  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
 //`
 
-//TODO: Add setters to attribute. Somehow set this without calling the setter? Hidden variable with get/set?
+@CustomElement('my-test')
+class Test extends Component(html`
+  <h1>No attribute Sadge</h1>
+`) {
+  @Attribute("default")
+  text!: string;
 
+  @Element('h1')
+  heading!: HTMLHeadingElement;
+
+  constructor() {
+    super();
+    this.heading.addEventListener('click', () => {
+      this.text = "CLICKED";
+    });
+  }
+
+  update() {
+    console.log("hyllo");
+    this.heading.innerText = this.text;
+  }
+}
+
+/*
+@CustomElement('my-element')
+class MyElement extends Component(html`
+  <h1>Hello world!</h1>
+`) {
+  @Attribute
+  text!: string;
+  
+  @Element('h1')
+  heading!: HTMLHeadingElement;
+
+  constructor() {
+    super();
+    console.log("element");
+    console.log("cosntructor: text = " + this.text);
+  }
+
+  init() {
+    console.log("init: text = " + this.text);
+
+    this.heading.addEventListener('click', () => {
+     this.text = "YEP";
+   });
+  }
+
+  update() {
+    console.log("update: text = " + this.text);
+    this.heading.innerText = this.text;
+  }
+}
+*/
+
+/*
 @CustomElement('hello-world')
 class HelloWorldComponent extends Component(html`
   <span></span>
@@ -36,6 +90,7 @@ class TestComponent extends Component(html`
     Welcome <span id="name"></span>
   </p>
   <hello-world />
+  <my-element text="Hello" />
 `) {
   @TestComponent.Attribute
   text: string = "default";
@@ -67,3 +122,4 @@ class TestComponent extends Component(html`
     this.helloElement.name = this.name;
   }
 }
+*/
